@@ -2,7 +2,6 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
-const axios = require('axios');
 const networkHelper = require(__dirname + '/public/modules/network_helper.js');
 
 const app = express();
@@ -12,9 +11,7 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
-const xandrBaseUrl = "https://api.appnexus.com/";
-
-let userToken = ""; // is filled from auth endpoint
+let userToken = "";
 
 app.get("/", function (req, res) {
     res.redirect("auth");
@@ -29,10 +26,11 @@ app.post("/auth", async function (req, res) {
     const loginCredentials = { username: req.body.username, password: req.body.password };
     try {
         userToken = await networkHelper.authenticate(loginCredentials); // pass the credentials
-    } catch (error) {
+        res.redirect("/audit"); // redirects to audit
+    } catch (e) {
+        console.error('Error:', e);
         res.redirect("/auth"); // refresh page with some message
     }    
-    res.redirect("/audit"); // redirects to audit
 });
 
 app.get("/audit", function (req, res) {
