@@ -1,0 +1,39 @@
+.panel {
+    max-width: 400px;
+    margin: 0 auto;
+    margin-top: 100px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.navbar {
+    background-color: #f4f2f2;
+}
+
+.navbar-nav.flex-row {
+    margin: 10px 10%;
+}
+
+.nav-item {
+    margin-right: 40px;
+}
+
+.btn {
+    display: block;
+    margin: auto;
+}
+
+.table-container {
+    margin: 20px 5%;
+}
+
+.xandr-logo {
+    display: inline;
+    height: 50px;
+    padding-bottom: 20px;
+}
+
+.auth-title {
+    display: inline;
+}
