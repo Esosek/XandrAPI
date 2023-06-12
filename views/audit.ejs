@@ -4,14 +4,14 @@
     <%- include('partials/navbar') %>
 
     <div class="container mt-4">
-        <h1 class="text-center mb-4">Domain Audit</h1>
+        <h1 class="mb-4">Domain Audit</h1>
         <form method="POST" action="/audit">
             <div class="mb-3">
                 <input type="text" class="form-control" id="urls" name="urls" placeholder="Enter URLs">
                 <div id="url-help" class="form-text">You may put in multiple domains separated by comma. Example:
-                    "domain1.cz,domain2.com,domain3.eu"</div>
+                    <i>domain1.cz,domain2.com,domain3.eu</i></div>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary submit-button">Submit</button>
         </form>
     </div>
 

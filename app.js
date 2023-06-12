@@ -34,7 +34,7 @@ app.post("/auth", async function (req, res) {
 });
 
 app.get("/audit", function (req, res) {
-    res.render('audit', { results: [] });
+    res.render("audit", { results: [] });
 });
 
 // handles post request on /audit endpoint
@@ -50,6 +50,10 @@ app.post("/audit", async function (req, res) {
         res.redirect("/auth"); 
     }        
 });
+
+app.get("/inventory", async function (req, res) {
+    res.render("inventory");
+})
 
 app.listen(port, function(){
     console.log(`Sever started on port ${port}`);

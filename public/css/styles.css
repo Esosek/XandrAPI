@@ -11,6 +11,10 @@
     background-color: #f4f2f2;
 }
 
+.form-label {
+    font-weight: bold;
+}
+
 .navbar-nav.flex-row {
     margin: 10px 10%;
 }
@@ -22,6 +26,10 @@
 .btn {
     display: block;
     margin: auto;
+}
+
+.submit-button {
+    width: 20%;
 }
 
 .table-container {
@@ -36,4 +44,18 @@
 
 .auth-title {
     display: inline;
+}
+
+#site-name {
+    width: 30%;
+}
+
+#hiddenDiv {
+    display: flex;
+    margin-top: 5px;
+}
+
+#showDivLink {
+    display: block;
+    margin-bottom: 10px;
 }
