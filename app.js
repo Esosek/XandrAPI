@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(express.static("public"));
 
-let userToken = "authn:247645:2b2a81ad14673:ams3";
+let userToken = "authn:247645:87437186c10d3:nym2";
 
 app.get("/", function (req, res) {
     res.redirect("auth");
@@ -69,6 +69,19 @@ app.post("/sites", async function (req, res) {
         const sitesData = await networkHelper.getSites(userToken, publisherId);
         console.log(sitesData);
         res.json({ sites: sitesData });
+    } catch (error) {
+        console.log(error);
+        res.redirect("/auth"); 
+    } 
+})
+
+app.post("/create-site", async function (req, res) {
+    const publisherId = req.body.publisherId;
+    const siteName = req.body.newSiteName;
+    
+    try {
+        const siteData = await networkHelper.createSite(userToken, publisherId, siteName);
+        res.json({ site: siteData });
     } catch (error) {
         console.log(error);
         res.redirect("/auth"); 

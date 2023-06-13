@@ -98,7 +98,7 @@ exports.getPublisher = async function (userToken) {
         }
         else {
             throw new Error("Publisher response status is not 200");
-        }       
+        }
 
     } catch (error) {
         throw new Error("Fetching publishers failed");
@@ -128,10 +128,53 @@ exports.getSites = async function (userToken, publisherId) {
         }
         else {
             throw new Error("Sites response status is not 200");
-        }       
+        }
 
     } catch (error) {
         throw new Error("Fetching sites failed");
+    }
+}
+
+exports.createSite = async function (userToken, publisherId, siteName) {
+    try {
+        const requestHeader = {
+            headers: {
+                'Authorization': 'Bearer ' + userToken
+            }
+        }
+
+        const requestBody = {
+            site: {
+                name: siteName,
+                rtb: true
+            }
+        }
+        const response = await axios.post(xandrBaseUrl + '/site?publisher_id=' + publisherId, requestBody, requestHeader);
+
+        if (response.status == 200) {
+            const sitesData = response.data.response.site; // all the data associated to this new site
+
+            const putRequestBody = {
+                site: {
+                    code: sitesData.id
+                }                
+            }
+
+            try {
+                // sets the code parameter to its own ID
+                const putResponse = await axios.put(xandrBaseUrl + '/site?id=' + sitesData.id, putRequestBody, requestHeader);                
+            } catch (error) {
+                throw new Error("Updating new site failed");
+            }
+
+            return sitesData;
+        }
+        else {
+            throw new Error("Sites response status is not 200");
+        }
+
+    } catch (error) {
+        throw new Error("Creating site failed");
     }
 }
 

@@ -46,13 +46,8 @@
     display: inline;
 }
 
-#site-name {
+#new-site-name {
     width: 30%;
-}
-
-#hiddenDiv {
-    display: flex;
-    margin-top: 5px;
 }
 
 #showDivLink {

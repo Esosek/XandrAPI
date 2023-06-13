@@ -28,19 +28,22 @@
                         <a href="#" id="showDivLink" class="link-primary link-offset-1">Create new Site Group</a>
 
                         <div id="hiddenDiv" style="display:none;" class="mb-3 align-items-center">
-                            <input type="text" class="form-control" id="site-name" name="site-name"
-                                placeholder="Enter site name">
-                            <button type="submit" class="btn btn-primary ms-2">+</button>
+                            <div class="form-text mb-2">Use CPEx naming convention. Example: <i>cpex.cz</i> or <i>demo.cpex.cz</i></div>
+                            <div class="d-flex align-items-center">
+                                <input type="text" class="form-control" id="new-site-name" name="new-site-name"
+                                    placeholder="Enter site name">
+                                <button id="create-site" type="button" class="btn btn-primary ms-2">+</button>
+                            </div>
                         </div>
-                        <div class="mb-3">
+
+                        <form class="mb-3" method="post" action="/create-site">
                             <label for="placement-names" class="form-label">Placements</label>
                             <div class="form-text">Put in names without publisher and site group prefix separated by
                                 line
                                 end. Example: <i>rectangle-1</i></div>
                             <textarea class="form-control" id="placement-names" rows="7"
                                 placeholder="Enter placement names"></textarea>
-
-                        </div>
+                        </form>
 
                         <button type="submit" class="btn btn-primary submit-button">Submit</button>
                     </div>

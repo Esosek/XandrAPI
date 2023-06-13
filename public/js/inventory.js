@@ -14,11 +14,13 @@ const siteSection = document.getElementById('site-section');
 siteSection.style.display = 'none';
 
 // Get the select element for publishers
-const selectElement = document.getElementById('publisher-select');
+const publisherSelectElement = document.getElementById('publisher-select');
+
+const createSiteBtn = document.getElementById('create-site');
 
 // Add an event listener for the 'change' event
-selectElement.addEventListener('change', function () {
-    const selectedValue = selectElement.value;
+publisherSelectElement.addEventListener('change', function () {
+    const selectedValue = publisherSelectElement.value;
 
     const postData = {
         publisher: selectedValue
@@ -36,7 +38,7 @@ selectElement.addEventListener('change', function () {
             .then(response => response.json())
             .then(data => {
                 // Update the HTML elements with the new data
-                updateSitesDropdown(data.sites);
+                updateSitesDropdown(data.sites, true);
                 siteSection.style.display = 'block';
             })
             .catch(error => {
@@ -50,14 +52,16 @@ selectElement.addEventListener('change', function () {
 });
 
 // Function to update the sites dropdown with new data
-function updateSitesDropdown(sitesData) {
+function updateSitesDropdown(sitesData, defaultEnabled) {
     const sitesDropdown = document.getElementById('site-group');
 
     // Clear existing options
     sitesDropdown.innerHTML = '';
-    const option = document.createElement('option');
-    option.textContent = "Select Site Group";
-    sitesDropdown.appendChild(option);
+    if(defaultEnabled) { // if no choice is possible, add it
+        const option = document.createElement('option');
+        option.textContent = "Select Site Group";
+        sitesDropdown.appendChild(option);
+    }    
 
     // Add new options based on the sites data
     sitesData.forEach(site => {
@@ -67,3 +71,37 @@ function updateSitesDropdown(sitesData) {
         sitesDropdown.appendChild(option);
     });
 }
+
+createSiteBtn.addEventListener('click', function (event) {
+    event.preventDefault();
+    const siteName = document.getElementById('new-site-name').value;
+    const publisherId = publisherSelectElement.value;
+
+    const postData = {
+        publisherId: publisherId,
+        newSiteName: siteName
+    };
+
+    // Send the POST request
+    if (siteName) {
+        fetch('/create-site', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(postData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Update the HTML elements with the new data
+                updateSitesDropdown([data.site], false);
+                siteName.value = ""; // reset the input text
+                $('#hiddenDiv').toggle(); // hide the site creation section
+                
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+    // else do nothing
+});
