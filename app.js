@@ -9,9 +9,10 @@ const port = process.env.PORT || 3000;
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 app.use(express.static("public"));
 
-let userToken = "";
+let userToken = "authn:247645:2b2a81ad14673:ams3";
 
 app.get("/", function (req, res) {
     res.redirect("auth");
@@ -52,9 +53,28 @@ app.post("/audit", async function (req, res) {
 });
 
 app.get("/inventory", async function (req, res) {
-    res.render("inventory");
+    try {
+        const publisherData = await networkHelper.getPublisher(userToken);
+        //console.log(publisherData);
+        res.render("inventory", { publishers: publisherData, sites: [] });
+    } catch (error) {
+        console.log(error);
+        res.redirect("/auth"); 
+    }        
+})
+
+app.post("/sites", async function (req, res) {
+    const publisherId = req.body.publisher;
+    try {
+        const sitesData = await networkHelper.getSites(userToken, publisherId);
+        console.log(sitesData);
+        res.json({ sites: sitesData });
+    } catch (error) {
+        console.log(error);
+        res.redirect("/auth"); 
+    } 
 })
 
 app.listen(port, function(){
-    console.log(`Sever started on port ${port}`);
+    console.log(`Server started on port ${port}`);
 });

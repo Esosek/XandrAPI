@@ -9,51 +9,44 @@
                 <form>
                     <div class="mb-3">
                         <label for="publisher" class="form-label">Publisher</label>
-                        <select class="form-select" id="publisher" name="publisher">
+                        <select class="form-select" id="publisher-select" name="publisher">
                             <option value="">Select Publisher</option>
-                            <option value="publisher1">Publisher 1</option>
-                            <option value="publisher2">Publisher 2</option>
-                            <option value="publisher3">Publisher 3</option>
+                            <% publishers.forEach(publisher=> { %>
+                                <option value="<%= publisher.id %>">
+                                    <%= publisher.name %>
+                                </option>
+                                <% }); %>
                         </select>
                     </div>
-                    <div class="mb-3">
-                        <label for="site-group" class="form-label">Site Group</label>
-                        <select class="form-select" id="site-group" name="site-group">
-                            <option value="">Select Site Group</option>
-                            <option value="group1">Site Group 1</option>
-                            <option value="group2">Site Group 2</option>
-                            <option value="group3">Site Group 3</option>
-                        </select>
-                    </div>
-                    <a href="#" id="showDivLink" class="link-primary link-offset-1">Create new Site Group</a>
+                    <div id="site-section">
+                        <div class="mb-3">
+                            <label for="site-group" class="form-label">Site Group</label>
+                            <select class="form-select" id="site-group" name="site-group">
+                                <option value="">Select Site Group</option>
+                            </select>
+                        </div>
+                        <a href="#" id="showDivLink" class="link-primary link-offset-1">Create new Site Group</a>
 
-                    <div id="hiddenDiv" style="display:none;" class="mb-3 align-items-center">
-                        <input type="text" class="form-control" id="site-name" name="site-name"
-                            placeholder="Enter site name">
-                        <button type="submit" class="btn btn-primary ms-2">+</button>
+                        <div id="hiddenDiv" style="display:none;" class="mb-3 align-items-center">
+                            <input type="text" class="form-control" id="site-name" name="site-name"
+                                placeholder="Enter site name">
+                            <button type="submit" class="btn btn-primary ms-2">+</button>
+                        </div>
+                        <div class="mb-3">
+                            <label for="placement-names" class="form-label">Placements</label>
+                            <div class="form-text">Put in names without publisher and site group prefix separated by
+                                line
+                                end. Example: <i>rectangle-1</i></div>
+                            <textarea class="form-control" id="placement-names" rows="7"
+                                placeholder="Enter placement names"></textarea>
+
+                        </div>
+
+                        <button type="submit" class="btn btn-primary submit-button">Submit</button>
                     </div>
-                    <div class="mb-3">
-                        <label for="placement-names" class="form-label">Placements</label>
-                        <div class="form-text">Put in names without publisher and site group prefix separated by line end. Example: <i>rectangle-1</i></div>
-                        <textarea class="form-control" id="placement-names" rows="7" placeholder="Enter placement names"></textarea>
-                        
-                      </div>
-                      
-                      <button type="submit" class="btn btn-primary submit-button">Submit</button>
                 </form>
             </div>
-            <script>
-                $(document).ready(function () {
-                    // When the link is clicked
-                    $('#showDivLink').click(function (e) {
-                        e.preventDefault();
-
-                        // Toggle the visibility of the div
-                        $('#hiddenDiv').toggle();
-                    });
-                });
-
-            </script>
+            <script src="/js/inventory.js"></script>
     </body>
 
     </html>
