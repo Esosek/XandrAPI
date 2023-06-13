@@ -57,11 +57,11 @@ function updateSitesDropdown(sitesData, defaultEnabled) {
 
     // Clear existing options
     sitesDropdown.innerHTML = '';
-    if(defaultEnabled) { // if no choice is possible, add it
+    if (defaultEnabled) { // if no choice is possible, add it
         const option = document.createElement('option');
         option.textContent = "Select Site Group";
         sitesDropdown.appendChild(option);
-    }    
+    }
 
     // Add new options based on the sites data
     sitesData.forEach(site => {
@@ -74,7 +74,8 @@ function updateSitesDropdown(sitesData, defaultEnabled) {
 
 createSiteBtn.addEventListener('click', function (event) {
     event.preventDefault();
-    const siteName = document.getElementById('new-site-name').value;
+    const siteNameElement = document.getElementById('new-site-name');
+    const siteName = siteNameElement.value;
     const publisherId = publisherSelectElement.value;
 
     const postData = {
@@ -95,9 +96,9 @@ createSiteBtn.addEventListener('click', function (event) {
             .then(data => {
                 // Update the HTML elements with the new data
                 updateSitesDropdown([data.site], false);
-                siteName.value = ""; // reset the input text
-                $('#hiddenDiv').toggle(); // hide the site creation section
-                
+                siteNameElement.value = ""; // Reset the input text
+                $('#hiddenDiv').toggle(); // Hide the site creation section
+
             })
             .catch(error => {
                 console.error(error);

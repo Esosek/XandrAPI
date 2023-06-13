@@ -67,7 +67,6 @@ app.post("/sites", async function (req, res) {
     const publisherId = req.body.publisher;
     try {
         const sitesData = await networkHelper.getSites(userToken, publisherId);
-        console.log(sitesData);
         res.json({ sites: sitesData });
     } catch (error) {
         console.log(error);
