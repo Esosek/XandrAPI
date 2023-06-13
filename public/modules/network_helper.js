@@ -2,6 +2,7 @@ const axios = require('axios');
 
 const xandrBaseUrl = "https://api.appnexus.com/";
 
+// Function to send a request to Xandr API
 async function sendRequest(url, method, userToken, requestBody) {
   const requestHeader = {
     headers: {
@@ -22,6 +23,7 @@ async function sendRequest(url, method, userToken, requestBody) {
   }
 }
 
+// Function to authenticate the user
 exports.authenticate = async function (loginCredentials) {
   const requestBody = {
     auth: {
@@ -37,6 +39,7 @@ exports.authenticate = async function (loginCredentials) {
   return userToken;
 }
 
+// Function to perform a URL audit
 exports.audit = async function (domains, userToken) {
   const requestBody = { urls: domains };
   const response = await sendRequest(xandrBaseUrl + '/url-audit-search', 'post', userToken, requestBody);
@@ -56,6 +59,7 @@ exports.audit = async function (domains, userToken) {
   return results;
 }
 
+// Function to get publisher information
 exports.getPublisher = async function (userToken) {
   const response = await sendRequest(xandrBaseUrl + '/publisher', 'get', userToken);
   const publisherData = response.publishers;
@@ -73,6 +77,7 @@ exports.getPublisher = async function (userToken) {
   return publisherId;
 }
 
+// Function to get site information for a specific publisher
 exports.getSites = async function (userToken, publisherId) {
   const url = xandrBaseUrl + '/site?publisher_id=' + publisherId;
   const response = await sendRequest(url, 'get', userToken);
@@ -89,6 +94,7 @@ exports.getSites = async function (userToken, publisherId) {
   return sitesId;
 }
 
+// Function to create a new site for a specific publisher
 exports.createSite = async function (userToken, publisherId, siteName) {
   const createSiteUrl = xandrBaseUrl + '/site?publisher_id=' + publisherId;
   const requestBody = { site: { name: siteName, rtb: true } };
@@ -107,6 +113,7 @@ exports.createSite = async function (userToken, publisherId, siteName) {
   return sitesData;
 }
 
+// Function to sort objects based on name property
 function letterSort(a, b) {
   if (a.name < b.name) {
     return -1;

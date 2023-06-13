@@ -17,6 +17,7 @@ siteSection.style.display = 'none';
 const publisherSelectElement = document.getElementById('publisher-select');
 
 const createSiteBtn = document.getElementById('create-site');
+const sitesDropdown = document.getElementById('site-group');
 
 // Add an event listener for the 'change' event
 publisherSelectElement.addEventListener('change', function () {
@@ -26,16 +27,9 @@ publisherSelectElement.addEventListener('change', function () {
         publisher: selectedValue
     };
 
-    // Send the POST request
+    // Send the POST request to fetch sites data
     if (selectedValue) {
-        fetch('/sites', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(postData)
-        })
-            .then(response => response.json())
+        sendPostRequest('/sites', postData)
             .then(data => {
                 // Update the HTML elements with the new data
                 updateSitesDropdown(data.sites, true);
@@ -44,32 +38,47 @@ publisherSelectElement.addEventListener('change', function () {
             .catch(error => {
                 console.error(error);
             });
-    }
-    else {
+    } else {
         // No publisher was chosen, hide the site section again
         siteSection.style.display = 'none';
     }
 });
 
+// Function to send a POST request
+function sendPostRequest(url, data) {
+    return fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json());
+}
+
 // Function to update the sites dropdown with new data
 function updateSitesDropdown(sitesData, defaultEnabled) {
-    const sitesDropdown = document.getElementById('site-group');
-
-    // Clear existing options
     sitesDropdown.innerHTML = '';
-    if (defaultEnabled) { // if no choice is possible, add it
-        const option = document.createElement('option');
-        option.textContent = "Select Site Group";
+
+    if (defaultEnabled) {
+        // Add a default option when enabled
+        const option = createOptionElement("Select Site Group");
         sitesDropdown.appendChild(option);
     }
 
-    // Add new options based on the sites data
     sitesData.forEach(site => {
-        const option = document.createElement('option');
-        option.value = site.id;
-        option.textContent = site.name;
+        // Add options based on the sites data
+        const option = createOptionElement(site.name, site.id);
         sitesDropdown.appendChild(option);
     });
+}
+
+// Function to create an option element
+function createOptionElement(text, value = "") {
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = text;
+    return option;
 }
 
 createSiteBtn.addEventListener('click', function (event) {
@@ -83,22 +92,14 @@ createSiteBtn.addEventListener('click', function (event) {
         newSiteName: siteName
     };
 
-    // Send the POST request
+    // Send the POST request to create a site
     if (siteName) {
-        fetch('/create-site', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(postData)
-        })
-            .then(response => response.json())
+        sendPostRequest('/create-site', postData)
             .then(data => {
                 // Update the HTML elements with the new data
                 updateSitesDropdown([data.site], false);
                 siteNameElement.value = ""; // Reset the input text
                 $('#hiddenDiv').toggle(); // Hide the site creation section
-
             })
             .catch(error => {
                 console.error(error);
