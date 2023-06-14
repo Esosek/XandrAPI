@@ -1,55 +1,54 @@
 <%- include('partials/header', {pageTitle: "Inventory" }) %>
 
-    <body>
-        <%- include('partials/navbar') %>
+<body>
+  <%- include('partials/navbar') %>
 
-            <div class="container mt-4">
-                <h1>Inventory</h1>
+  <div class="container mt-4">
+    <h1>Inventory</h1>
 
-                <form>
-                    <div class="mb-3">
-                        <label for="publisher" class="form-label">Publisher</label>
-                        <select class="form-select" id="publisher-select" name="publisher">
-                            <option value="">Select Publisher</option>
-                            <% publishers.forEach(publisher=> { %>
-                                <option value="<%= publisher.id %>">
-                                    <%= publisher.name %>
-                                </option>
-                                <% }); %>
-                        </select>
-                    </div>
-                    <div id="site-section">
-                        <div class="mb-3">
-                            <label for="site-group" class="form-label">Site Group</label>
-                            <select class="form-select" id="site-group" name="site-group">
-                                <option value="">Select Site Group</option>
-                            </select>
-                        </div>
-                        <a href="#" id="showDivLink" class="link-primary link-offset-1">Create new Site Group</a>
+    <form method="post" action="/inventory" id="inventory-form">
+      <div class="mb-3">
+        <label for="publisher" class="form-label">Publisher</label>
+        <select class="form-select" id="publisher-select" name="publisher">
+          <option value="">Select Publisher</option>
+          <% publishers.forEach(publisher=> { %>
+          <option value="<%= publisher.id %>">
+            <%= publisher.name %>
+          </option>
+          <% }); %>
+        </select>
+      </div>
+      <div id="site-section">
+        <div class="mb-3">
+          <label for="site-group" class="form-label">Site Group</label>
+          <select class="form-select" id="site-group" name="siteGroup">
+            <option value="">Select Site Group</option>
+          </select>
+        </div>
+        <a href="#" id="showDivLink" class="link-primary link-offset-1">Create new Site Group</a>
 
-                        <div id="hiddenDiv" style="display:none;" class="mb-3 align-items-center">
-                            <div class="form-text mb-2">Use CPEx naming convention. Example: <i>cpex.cz</i> or <i>demo.cpex.cz</i></div>
-                            <div class="d-flex align-items-center">
-                                <input type="text" class="form-control" id="new-site-name" name="new-site-name"
-                                    placeholder="Enter site name">
-                                <button id="create-site" type="button" class="btn btn-primary ms-2">+</button>
-                            </div>
-                        </div>
+        <div id="hiddenDiv" style="display:none;" class="mb-3 align-items-center">
+          <div class="form-text mb-2">Use CPEx naming convention. Example: <i>cpex.cz</i> or <i>demo.cpex.cz</i>
+          </div>
+          <div class="d-flex align-items-center">
+            <input type="text" class="form-control" id="new-site-name" name="newSiteName"
+              placeholder="Enter site name">
+            <button id="create-site" type="button" class="btn btn-primary ms-2">+</button>
+          </div>
+        </div>
 
-                        <form class="mb-3" method="post" action="/create-site">
-                            <label for="placement-names" class="form-label">Placements</label>
-                            <div class="form-text">Put in names without publisher and site group prefix separated by
-                                line
-                                end. Example: <i>rectangle-1</i></div>
-                            <textarea class="form-control" id="placement-names" rows="7"
-                                placeholder="Enter placement names"></textarea>
-                        </form>
+        <div class="mb-3">
+          <label for="placement-names" class="form-label">Placements</label>
+          <div class="form-text">Put in names without publisher and site group prefix separated by line
+            end. Example: <i>rectangle-1</i></div>
+          <textarea class="form-control" id="placement-names" rows="7" placeholder="Enter placement names" name="placementNames"></textarea>
+        </div>
 
-                        <button type="submit" class="btn btn-primary submit-button">Submit</button>
-                    </div>
-                </form>
-            </div>
-            <script src="/js/inventory.js"></script>
-    </body>
+        <button type="submit" class="btn btn-primary submit-button">Submit</button>
+      </div>
+    </form>
+  </div>
+  <script src="/js/inventory.js"></script>
+</body>
 
-    </html>
+</html>

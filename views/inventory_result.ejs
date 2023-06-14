@@ -1,0 +1,36 @@
+<%- include('partials/header', {pageTitle: "Inventory" }) %>
+
+    <body>
+        <%- include('partials/navbar') %>
+
+            <% if(placements.length> 0) { %>
+                <div class="container mt-4">
+                    <h1>Success!</h1>
+                    <p>Following placements were created</p>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width: 50%;">Name</th>
+                                <th scope="col" style="width: 50%;">ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% placements.forEach(placement=> { %>
+                                <tr>
+                                    <td>
+                                        <%= placement.name %>
+                                    </td>
+                                    <td>
+                                        <%= placement.id %>
+                                    </td>
+                                </tr>
+                                <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+                <% } %>
+    </body>
+
+    </html>

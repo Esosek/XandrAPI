@@ -1,45 +1,50 @@
-<%- include('partials/header', {pageTitle: "Audit"}) %>
+<%- include('partials/header', {pageTitle: "Audit" }) %>
 
-<body>
-    <%- include('partials/navbar') %>
+    <body>
+        <%- include('partials/navbar') %>
 
-    <div class="container mt-4">
-        <h1 class="mb-4">Domain Audit</h1>
-        <form method="POST" action="/audit">
-            <div class="mb-3">
-                <input type="text" class="form-control" id="urls" name="urls" placeholder="Enter URLs">
-                <div id="url-help" class="form-text">You may put in multiple domains separated by comma. Example:
-                    <i>domain1.cz,domain2.com,domain3.eu</i></div>
+            <div class="container mt-4">
+                <h1 class="mb-4">Domain Audit</h1>
+                <form method="POST" action="/audit">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="urls" name="urls" placeholder="Enter URLs">
+                        <div id="url-help" class="form-text">You may put in multiple domains separated by comma.
+                            Example:
+                            <i>domain1.cz,domain2.com,domain3.eu</i>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary submit-button">Submit</button>
+                </form>
             </div>
-            <button type="submit" class="btn btn-primary submit-button">Submit</button>
-        </form>
-    </div>
 
-    <% if(results.length> 0) { %>
-        <div class="table-container">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Domain</th>
-                        <th scope="col">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% results.forEach(result=> { %>
-                        <tr>
-                            <td>
-                                <%= result.domain %>
-                            </td>
-                            <td title="<%= result.reason %>">
-                                <%= result.status %>
-                            </td>
-                        </tr>
-                        <% }); %>
-                </tbody>
-                <caption class="form-text">Tip: Hover over status to get a detailed description</caption>
-            </table>
-        </div>
-        <% } %>
-</body>
+            <% if(results.length> 0) { %>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width: 30%;">Domain</th>
+                                <th scope="col" style="width: 20%;">Status</th>
+                                <th scope="col" style="width: 50%;">Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% results.forEach(result=> { %>
+                                <tr>
+                                    <td>
+                                        <%= result.domain %>
+                                    </td>
+                                    <td>
+                                        <%= result.status %>
+                                    </td>
+                                    <td>
+                                        <%= result.reason %>
+                                    </td>
+                                </tr>
+                                <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+                <% } %>
+    </body>
 
-</html>
+    </html>

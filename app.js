@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(express.static("public"));
 
-let userToken = "authn:247645:87437186c10d3:nym2";
+let userToken = "authn:247645:151c575b0b343:ams3";
 
 app.get("/", function (req, res) {
     res.redirect("auth");
@@ -56,11 +56,26 @@ app.get("/inventory", async function (req, res) {
     try {
         const publisherData = await networkHelper.getPublisher(userToken);
         //console.log(publisherData);
-        res.render("inventory", { publishers: publisherData, sites: [] });
+        res.render("inventory", { publishers: publisherData });
     } catch (error) {
         console.log(error);
         res.redirect("/auth"); 
     }        
+})
+
+app.post("/inventory", async function (req, res) {
+    const requestBody = req.body;
+    // if there is no name input, refresh the page
+    if(req.body.placementNames === "") { res.redirect("/inventory") }
+    try {
+        // placement data is array of { id + name }
+        const placementData = await networkHelper.createPlacements(userToken, requestBody);
+        console.log(placementData);
+        res.render("inventory_result", { placements: placementData });
+    } catch (error) {
+        console.log(error);
+        res.redirect("/auth"); 
+    }
 })
 
 app.post("/sites", async function (req, res) {
