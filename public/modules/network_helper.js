@@ -115,6 +115,7 @@ exports.createSite = async function (userToken, publisherId, siteName) {
 
 exports.createPlacements = async function (userToken, requestBody) {
     const placementNames = requestBody.placementNames.split('\r\n');
+
     console.log(placementNames);
 
     const createPlacementUrl = xandrBaseUrl + '/placement?site_id=' + requestBody.siteGroup;
@@ -137,7 +138,10 @@ async function createSinglePlacement(userToken, createPlacementUrl, requestBody)
         const createPlacementResponse = await sendRequest(createPlacementUrl, 'post', userToken, requestBody);
         const placementData = createPlacementResponse.placement;
 
-        const putRequestBody = { placement: { code: placementData.id } };
+        // rename the placement to CPEx convention
+        const newPlacementName = placementData.publisher_name + " " + placementData.site_name + " " + placementData.name;
+
+        const putRequestBody = { placement: { name: newPlacementName, code: placementData.id } };
         const updatePlacementResponse = await sendRequest(xandrBaseUrl + '/placement?id=' + placementData.id, 'put', userToken, putRequestBody);
         const updatedPlacementData = updatePlacementResponse.placement;
 
