@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("public"));
 
-let userToken = "authn:247645:fc0c3f0f33b23:ams3";
+let userToken = "";
 
 app.get("/", function (req, res) {
     res.redirect("auth");
